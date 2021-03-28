@@ -12,6 +12,16 @@
 
 """
 
+def factorial(inteiro):
+
+    if inteiro >= 0:
+        resultado = 1
+        for num in range(1, inteiro+1):
+            resultado *= num
+        return resultado
+    else:
+        pass
+
 def operacao_ecra(lista):
     operacao = ""
     for item in lista:
@@ -29,7 +39,16 @@ def opera(lista, operacoes):
 
     lista_resultado = lista[:-1].copy() if lista[-1] in operacoes else lista.copy()
 
-    ## Multiplicação e divisão em primeiro lugar.
+    ## Factorial:
+    while "!" in lista_resultado:
+        fact = lista_resultado.index("!")
+
+        lista_resultado[fact-1] = factorial(int(lista_resultado[fact-1]))
+
+        del lista_resultado[fact: fact+1]
+
+
+    ## Multiplicação e divisão:
     while "*" in lista_resultado or "/" in lista_resultado:
         multiplicacao = lista_resultado.index("*") if "*" in lista_resultado else 0
         divisao = lista_resultado.index("/") if "/" in lista_resultado else 0
@@ -44,7 +63,7 @@ def opera(lista, operacoes):
 
             del lista_resultado[elimina: elimina+2]
 
-    ## As restantes operações em último
+    ## As restantes operações agora:
     operacao = ""
     resultado = 0
     for item in lista_resultado:
@@ -57,12 +76,15 @@ def opera(lista, operacoes):
         else:
             resultado += item
 
-    ##print(lista)
-    ##print(lista_resultado)
+    print(lista)
+    print(lista_resultado)
 
     return resultado
 
 operacoes = ["+", "-", "*", "/", "!", "=", "#", "C", "c"]
+
+##for numero in range(-1, 10):
+##    print(numero, factorial(numero))
 
 lista = []
 display = ""
@@ -83,10 +105,13 @@ while entrada != "#":
         elif entrada in operacoes:
             operacao = entrada
             if len(lista) > 0:
-                if lista[-1] in operacoes:
+                if lista[-1] in operacoes and lista[-1] != "!":
                     lista[-1] = operacao
                 else:
                     lista += operacao
+
+                if operacao == "!":
+                    resultado = opera(lista, operacoes)
 
         else:
             try:
