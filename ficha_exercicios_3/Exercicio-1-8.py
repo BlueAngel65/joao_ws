@@ -14,5 +14,5 @@ segundos = int(input("Escreva um número em segundos: "))
 
 horas = segundos/3600
 
-print(segundos, "segundos são", horas)
+print(segundos, "segundo(s) é/são", horas, "hora(s).")
 
